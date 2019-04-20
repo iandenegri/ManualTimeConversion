@@ -9,16 +9,17 @@ import sys
 # Make sure this isn't being imported. If it is then variables will not be passed in through command line but as arguments in the coversion function.
 if __name__ == "__main__":
     # Get inputs by using "sys.argv". sys.argv[0] = file name, sys.argv[1] = first arg, etc.
-    if sys.argv.count == 2:
+    if len(sys.argv) == 2:
         time_to_convert = sys.argv[1]
         AMPM = "NA"
         print("Observed a 24hr format object.")
-    elif sys.argv.count == 3:
+    elif len(sys.argv) == 3:
         time_to_convert = sys.argv[1]
         AMPM = sys.argv[2]
         print("Observed an AMPM format object.")
     else:
         print("Please pass in at least 1 argument in a time format or 2 arguments in a time and AM/PM format. \nIE: 20:00 or 08:00 PM")
+        print(len(sys.argv))
         AMPM = "NA"
 
 def Time_Format_Conversion(time_string: str, AMPM: str):
