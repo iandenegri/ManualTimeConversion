@@ -29,3 +29,7 @@ def Time_Format_Conversion(time_string: str, AMPM: str):
     Takes one argument which is a string that should be formatted either in "20:00" or "08:00 PM" formats.
     """
     print(time_string)
+
+
+def determine_time_format():
+    return "uwu"
