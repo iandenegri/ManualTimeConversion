@@ -85,11 +85,6 @@ def Time_Format_Conversion(time_string: str, AMPM: str):
     ########## CONVERSION ##########
     return(converted_time)
 
-
-def determine_time_format():
-    # Move all the logic for determining what the input was to here.
-    return "uwu"
-
 # Make sure this isn't being imported. If it is then variables will not be passed in through command line but as arguments in the coversion function.
 if __name__ == "__main__":
     valid_args = False
