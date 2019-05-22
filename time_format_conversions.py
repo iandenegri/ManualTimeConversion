@@ -31,24 +31,23 @@ def Time_Format_Conversion(time_string: str, AMPM: str):
     if ":" not in time_string:
         return print("You did not pass a valid time string! Please pass a time with hours and minutes separated by a ':'.")
 
-    hrs = time_string.split(':')[0]
-    mins = time_string.split(':')[1]
+    hrs = time_string.split(':')[0].zfill(2)
+    mins = time_string.split(':')[1].zfill(2)
     AMPM = AMPM.upper()
-    print(AMPM)
 
     for hour in range(0, 23):
-        list_of_valid_hrs.append(str(hour))
-        list_of_valid_hrs.append("00")
+        list_of_valid_hrs.append(str(hour).zfill(2))
+        list_of_valid_hrs.append("0")
     for minute in range(0, 59):
-        list_of_valid_mins.append(str(minute))
-        list_of_valid_mins.append("00")
+        list_of_valid_mins.append(str(minute).zfill(2))
+        list_of_valid_mins.append("0")
 
     if hrs not in list_of_valid_hrs:
         return print("Your hour value is not valid! Please pass an hour value ranging from 0 to 23")
     if mins not in list_of_valid_mins:
         return print("Your minute value is not valid! Please pass a minute value ranging from 0 to 59")
 
-    if AMPM not in ['AM', 'PM', 'A.M.', 'P.M.']:
+    if AMPM not in ['AM', 'PM', 'A.M.', 'P.M.', 'N/A']:
         return print('Please make sure that your AM or PM argument is valid. \n IE: "AM", "PM", "am", "pm"')
 
     ########## VALIDATION ##########
@@ -58,44 +57,30 @@ def Time_Format_Conversion(time_string: str, AMPM: str):
 
     if AMPM == "N/A":
         #If this is NA then we're converting a 24hr time string to AMPM.
-        print(hrs)
-        print(mins)
-        if hrs == 0:
+        if hrs in ['0', '00']:
             hrs = "12"
             AMPM = "AM"
-            converted_time = (hrs + mins + AMPM)
-            print(converted_time)
-            return converted_time
-        elif hrs == 12:
+        elif int(hrs) == 12:
             hrs = "12"
             AMPM = "PM"
-            converted_time = (hrs + mins + AMPM)
-            print(converted_time)
-            return converted_time
-        elif hrs > 12:
+        elif int(hrs) > 12:
+            hrs = int(hrs)
             hrs = str(hrs-12)
-            print(hrs)
+            AMPM = "PM"
         else:
             AMPM = "AM"
-            converted_time = (hrs + mins + AMPM)
-            print(converted_time)
-            return converted_time
+        converted_time = (hrs + ":" + mins + " " + AMPM)
+        return converted_time
     else:
         #If we have something that isn't NA then we should have an AM or PM value. We can do an AM/PM check at the start when we're getting args from the command line.
-        if AMPM == "AM":
-            #If we're in the AM then no conversions need to be done. :-)
-            time = time_string[:6]
-            print(time)
-            hrs = time_string.split(':')[0]
-            mins = time_string.split(':')[1]
-            print(hrs)
-            print(mins)
-            converted_time="uwu"
-        else:
+        if AMPM == "PM":
             #We should be in the PM so we need to add 12 hours to the time.
-            print(hrs)
-            print(mins)
-            pass
+            hrs = int(hrs)
+            hrs = str(hrs+12)
+        elif int(hrs) == 12 and AMPM == 'AM':
+            hrs = '00'
+        converted_time = (hrs + ":" + mins)
+
 
     ########## CONVERSION ##########
     return(converted_time)
@@ -128,4 +113,4 @@ if __name__ == "__main__":
         AMPM = "N/A"
 
     if valid_args:
-        Time_Format_Conversion(time_to_convert, AMPM)
+        print(Time_Format_Conversion(time_to_convert, AMPM))
